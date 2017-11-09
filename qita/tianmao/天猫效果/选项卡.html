@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .box{
+            width: 1000px;
+            height: 500px;
+            background: #ccc;
+            margin: 0 auto;
+            margin-top:1000px;
+        }
+        .zbox{
+            width: 300px;
+            height: 500px;
+            margin-left: 300px;
+            background: #00A5C4;
+            float: left;
+            display: none;
+        }
+        .xbox{
+            width: 200px;
+            height: 500px;
+            background: #ffa31f;
+            margin-left:100px;
+        }
+
+    .shang{
+        width: 100px;
+        height: 100px;
+        background: #000;
+    }
+    .xia{
+        width: 100px;
+        height: 100px;
+        background: red;
+    }
+
+    </style>
+</head>
+<body>
+<div class="xia">
+    <div class="shang"></div>
+</div>
+
+<div class="box">
+    <div class="zbox"></div>
+    <div class="xbox"></div>
+</div>
+</body>
+<script>
+    let xia=document.querySelector(".xia")
+    let shang=document.querySelector(".shang")
+
+    xia.onmousemove=function () {
+        console.log("下面的元素受事件流影响的鼠标经过")
+    }
+    xia.onmouseenter=function () {
+        console.log("下面的元素不受事件流影响的鼠标经过")
+    }
+    shang.onmousemove=function () {
+        console.log("下面的元素受事件流影响的鼠标经过")
+    }
+    shang.onmouseenter=function () {
+        console.log("下面的元素不受事件流影响的鼠标经过")
+    }
+    xia.onmouseleave=function () {
+        console.log("上面的元素不受事件流影响的鼠标移出")
+    }
+    shang.onmouseleave=function () {
+        console.log("上面的元素受事件流影响的鼠标移出")
+    }
+    shang.onmouseleave=function () {
+        console.log("上面的元素不受事件流影响的鼠标移出")
+    }
+
+    let da=document.querySelector(".box")
+    let left=document.querySelector(".xbox")
+    let right=document.querySelector(".zbox")
+    left.onmousemove=function () {
+        right.style.display="block";
+    }
+
+    left.onmouseout=function (e) {
+        e.stopPropagation();
+//        right.style.display="none";
+    }
+    da.onmouseleave=function () {
+        right.style.display="none";
+    }
+
+    right.onmouseout=function () {
+        right.style.display="none";
+    }
+
+
+
+
+
+</script>
+</html>

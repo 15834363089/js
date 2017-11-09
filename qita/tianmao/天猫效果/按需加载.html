@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>按需加载</title>
+</head>
+<body>
+<img src="" alt="">
+首先在img里 把img src改成 data-src（前面设置什么都行，没必要非得data-），根据window.offsetTop设置按需加载。当我们滚动超出需求的高度 超过某一个块的时候，我们让某个图片加载src属性。
+</body>
+<script>
+    {
+        window.addEventListener("scroll", function () {
+            //添加一个  scroll  事件
+            let obj = document.body.scrollTop === 0 ? document.documentElement : document.body;
+            let st = obj.scrollTop;
+            //获取当前的scrollTop
+            for (let i = 0; i < 元素集合.length; i++) {
+                if (st > 元素All.length[i].offsetTop - window.innerHeight) {
+                    //判断当前这个容器的图片高度在减去当前浏览器的高度进行加载
+                    let imgs = 元素[i].querySelectorAll("img")
+                    //当前元素中查找
+                    for (let i = 0; i < 元素.length; i++) {
+                        imgs[i].src = imgs[i].getAttribute("data-src")
+                        //本身就有的属性可以直接访问
+                    }
+                }
+            }
+        })
+    }
+</script>
+</html>

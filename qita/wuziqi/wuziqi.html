@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            background: url("1.jpg") no-repeat;
+            background-size: cover;
+        }
+
+        .dabox {
+            width: 1200px;
+            height: 100vh;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .box {
+            width: 200px;
+            margin: 0 auto;
+            height: 100%;
+            display: flex;
+            align-content: center;
+            flex-wrap: wrap;
+            font-size: 16px;
+            line-height: 30px;
+            position: absolute;
+            right: calc(50% + 280px);
+        }
+
+        .baizi {
+            width: 50px;
+            height: 50px;
+            background: #000;
+            position: absolute;
+            top: 50%;
+
+            z-index: 111;
+        }
+
+        .box input {
+            display: block;
+            width: 100%;
+            height: 30px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            line-height: 30px;
+            margin: 20px;
+            z-index: 1111;
+            color: #000;
+        }
+
+        .box a {
+            display: block;
+            width: 100%;
+            height: 30px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            line-height: 30px;
+            margin: 20px;
+            z-index: 1111;
+            color: #000;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .box-h {
+            width: 590px;
+            height: 590px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            /*background: #ccc;*/
+            /*transform: scale(1.2,1.2);*/
+            display: none;
+        }
+
+        @keyframes show {
+            0% {
+                transform: scale(0.1, 0.1);
+            }
+            100% {
+                transform: scale(1, 1);
+            }
+        }
+
+        .show {
+            display: block;
+            animation: show 1.5s cubic-bezier(0.250, 0.250, 0.850, 1.630);
+        }
+
+        .fei {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            z-index: 999;
+            width: 200px;
+            height: 100px;
+            padding-top: 35px;
+            padding-left: 5px;
+            padding-right: 5px;
+            text-align: center;
+            background: #fff;
+            color: #fff;
+            transition: all 1s;
+            border-radius: 20px;
+            display: none;
+
+        }
+
+        .fei-left {
+            width: 90px;
+            height: 30px;
+            background: #000;
+            float: left;
+            line-height: 30px;
+            border-radius: 10px;
+            margin-right: 10px;
+            /*display: none;*/
+        }
+
+        .fei-left:hover {
+            background: red;
+            color: #4afdf8;
+        }
+
+        .fei-right {
+            width: 90px;
+            height: 30px;
+            background: #000;
+            float: left;
+            line-height: 30px;
+            border-radius: 10px;
+            /*display: none;*/
+        }
+
+        .fei-right:hover {
+            background: red;
+            color: #4afdf8;
+        }
+        .mask{
+            display: none;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            position: absolute;
+            top:0;
+            left:0;
+            z-index: 999999;
+            text-align: center;
+        }
+        .mask div:nth-child(1){
+            float:left;
+        }
+        .mask div:nth-child(1):after{
+            display: block;
+            content: "";
+            clear:both;
+        }
+        .mask input{
+            background: #fff;
+            bprder:1px solid #ccc;
+            line-height: 30px;
+            padding: 0 20px;
+            float:left;
+        }
+
+        h1{
+            float:left;
+            line-height: 200px;
+            font-size: 50px;
+            font-weight:100;
+            color:#fff;
+        }
+        a{
+            display: inline-block;
+            /*width: 100px;*/
+            display: inline-block;
+
+            color: #0effb4;
+            line-height: 30px;
+            padding: 0 20px;
+            text-decoration: none;
+        }
+        .hao{
+            width: 150px;
+            height: 400px;
+            background: #0AA6E8;
+        }
+        .yinyue{
+            width: 100%;
+            text-align: center;
+            cursor: pointer;
+        }
+        .tu{
+            /*background: rgba(99, 241, 255, 0.48);*/
+            width: 600px;
+            height: 600px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+            /*z-index: -1;*/
+        }
+    </style>
+</head>
+<body>
+
+<div class="dabox">
+    <div class="box">
+        <input type="button" value="开始游戏" id="start">
+        <input type="button" name="mode" value="游戏模式">
+        <input type="button" name="mode" value="人机对战">
+        <a href="">重新开始</a>
+        <!--<input type="button" value="白子">-->
+        <!--<input type="button" value="黑子">-->
+        <div class="yinyue">音乐 ：关</div>
+    </div>
+    <audio src="qinghuaci.mp3" autoplay></audio>
+    <div class="box-h">
+        <canvas width="600" height="600"></canvas>
+    </div>
+</div>
+
+<div class="mask">
+    <h1></h1>
+    <div>
+        <input type="button" value="重新开始" id="aaa">
+        <input type="button" value="生成棋谱" id="abc">
+    </div>
+
+    <a href="" id="wbl">下载</a>
+    <div class="tu"></div>
+</div>
+
+</body>
+<script>
+    {
+        //第一个功能  展示出来div
+        let start = document.querySelector("#start")
+        let boxh = document.querySelector(".box-h")
+        let body = document.querySelector("body")
+        let duang = document.createElement("div")
+        duang.classList.add("fei")
+        body.appendChild(duang)
+        let bai = document.createElement("div")
+        bai.classList.add("fei-left")
+        bai.innerHTML = "人机模式"
+        duang.appendChild(bai)
+        let hei = document.createElement("div")
+        hei.classList.add("fei-right")
+        hei.innerHTML = "自己玩"
+        duang.appendChild(hei)
+
+        start.onclick = function () {
+            duang.style.display = "block"
+
+        }
+        bai.onclick = function () {
+            boxh.classList.add("show")
+            duang.style.display = "none"
+            isal=true;
+        }
+        hei.onclick = function () {
+            boxh.classList.add("show")
+            duang.style.display = "none"
+        }
+
+        let isal=false;
+        let flag=true;
+        let canvas=document.querySelector("canvas");
+        let cj=canvas.getContext("2d");
+        cj.strokeStyle='#fff';
+        cj.fillStyle="#000"
+        let w=40;
+        let pos={};
+        drawBoard();
+        let blank={};
+
+        function drawBoard() {
+            cj.clearRect(0,0,600,600);
+            cj.beginPath();
+
+            for(let i=0;i<15;i++){
+                cj.moveTo(20,i*w+20.5)
+                cj.lineTo(580,i*w+20.5)
+                cj.moveTo(i*w+20.5,20)
+                cj.lineTo(i*w+20.5,580)
+            }
+            cj.stroke();
+
+            drawPoint(3,3)
+            drawPoint(7,7)
+            drawPoint(3,11)
+            drawPoint(11,3)
+            drawPoint(11,11)
+
+            function drawPoint(x,y) {
+                cj.save();
+                cj.translate(x*w+20,y*w+20)
+                cj.beginPath();
+                cj.arc(0,0,6,0,2*Math.PI)
+                cj.fill();
+                cj.restore()
+            }
+        }
+
+        function qizi(x,y,color) {
+            cj.save();
+            cj.translate(x*w+20,y*w+20);
+            cj.fillStyle=color;
+            cj.beginPath();
+            cj.arc(0,0,15,0,2*Math.PI)
+            cj.fill();
+            cj.restore();
+            pos[j(x,y)]=color;
+            delete  blank[j(x,y)]
+        }
+        for(let i=0;i<15;i++){
+            for(let k=0;k<15;k++){
+                blank[j(i,k)]=true;
+            }
+        }
+// qizi(7,7,"black")
+
+        canvas.onclick=function (e) {
+            let x=Math.round((e.offsetX-20)/w);
+            let y=Math.round((e.offsetY-20)/w);
+            if(pos[j(x,y)]){
+                return;
+            }
+
+            if(flag){
+                qizi(x,y,"black")
+                if(panduan(x,y,"black")===5){
+                    over('黑')
+                }
+                if(isal){
+                    let p=getpos()
+                    qizi(p.x,p.y,"#fff");
+                    if(panduan(p.x,p.y,"#fff")==5){
+                        over("白")
+                    }
+                    return;
+                }
+            }else{
+                qizi(x,y,"white")
+                if(panduan(x,y,"white")===5){
+                    over("白")
+                }
+            }
+            flag=!flag;
+        }
+        function getpos() {
+            let max=0;
+            let po={}
+            for(let i in blank){
+                let x=parseInt(i.split("_")[0])
+                let y=parseInt(i.split("_")[1])
+                let gg=panduan(x,y,"black")
+                if(gg>max){
+                    max=gg;
+                    po={x,y}
+                }
+            }
+            let max2=0;
+            let po2={};
+            for(let i in blank){
+                let x=parseInt(i.split("_")[0])
+                let y=parseInt(i.split("_")[1])
+                let gg=panduan(x,y,"#fff")
+                if(gg>max2){
+                    max2=gg;
+                    po2={x,y}
+                }
+            }
+            if(max>max2){
+                return po;
+            }else {
+                return po2;
+            }
+        }
+        function j(x,y) {
+            return x+"_"+y;
+        }
+
+        function panduan(x,y,color) {
+            let row=1;
+            let i=1;
+            while(pos[j(x+i,y)]===color){
+                row++;
+                i++;
+            }
+            i=1;
+            while (pos[j(x-i,y)]===color){
+                row++;
+                i++;
+            }
+            let col=1;
+            i=1;
+            while(pos[j(x,y+i)]===color){
+                col++;
+                i++;
+            }
+            i=1;
+            while (pos[j(x,y-i)]===color){
+                col++;
+                i++;
+            }
+            let x1=1;
+            i=1;
+            while(pos[j(x+i,y+i)]===color){
+                x1++;
+                i++;
+            }
+            i=1;
+            while (pos[j(x-i,y-i)]==color){
+                x1++;
+                i++;
+            }
+            let x2=1;
+            i=1;
+            while(pos[j(x+i,y-i)]==color){
+                x2++;
+                i++;
+            }
+            i=1;
+            while(pos[j(x-i,y+i)]==color){
+                x2++;
+                i++;
+            }
+            return Math.max(row,col,x1,x2)
+        }
+        let mask=document.querySelector(".mask")
+        let h=document.querySelector(".mask h1")
+        let chu=document.querySelector("#aaa")
+        function over(name) {
+            mask.style.display="block";
+            h.innerHTML=name+"棋子获胜"
+            chu.onclick=function () {
+                mask.style.display="none";
+                boxh.classList.remove("show")
+                cj.clearRect(0,0,600,600);
+                pos={};
+                drawBoard();
+                flag=true
+            }
+        }
+        let imgbox=document.querySelector(".tu")
+        let wlude=document.querySelector("#wbl")
+        let outpu=document.querySelector("#abc")
+        outpu.onclick=function () {
+            let url=canvas.toDataURL();
+            let newimg=new Image
+            newimg.src=url;
+            imgbox.appendChild(newimg)
+            wlude.href=url;
+            wlude.setAttribute("download","棋谱.png")
+        }
+
+        let music=document.querySelector("audio")
+        let set1=document.querySelector(".yinyue")
+        let flag2=true;
+        set1.onclick = function () {
+            if (flag2) {
+                music.pause();
+                set1.innerHTML = "音乐：开"
+            } else {
+                music.style.animationPlayState = "running";
+                music.play();
+                set1.innerHTML = "音乐：关"
+            }
+            flag2 = !flag2;
+        }
+    }
+
+</script>
+</html>

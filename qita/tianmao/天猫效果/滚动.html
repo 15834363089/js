@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            width: 100%;
+            height: 3000px;
+
+        }
+
+        .ding {
+            width: 100%;
+            height: 60px;
+            background: red;
+            position: fixed;
+            top: -60px;
+            left: 0;
+            transition: top 1s;
+        }
+
+        .zuoce {
+            width: 0;
+            height: 0;
+            position: fixed;
+            top: 60%;
+            left: calc(50% - 530px);
+
+            transition: all 0.5s;
+            overflow: hidden;
+        }
+
+        .aa {
+            width: 20px;
+            height: 20px;
+            background: red;
+            position: fixed;
+            top: 80%;
+            right: 0;
+
+        }
+
+        .neirong {
+            margin: 1000px auto 0;
+            width: 1000px;
+        }
+
+        .content {
+            width: 1000px;
+            height: 400px;
+            background: #ccc;
+            margin-top: 100px;
+            line-height: 400px;
+            text-align: center;
+            font-size: 50px;
+        }
+
+        .louceng {
+            width: 30px;
+            line-height: 30px;
+            text-align: center;
+            border: 1px solid #000;
+        }
+
+        .louceng:nth-child(1):hover {
+            background: #00A5C4;
+        }
+
+        .louceng:nth-child(2):hover {
+            background: #fd6a88;
+        }
+
+        .louceng:nth-child(3):hover {
+            background: #4bff33;
+        }
+
+        .louceng:nth-child(4):hover {
+            background: #0040ff;
+        }
+
+        .louceng:nth-child(5):hover {
+            background: #de6cff;
+        }
+
+        .louceng:nth-child(6):hover {
+            background: #ff0017;
+        }
+
+        .louceng:nth-child(1).active {
+            background: #00A5C4;
+        }
+
+        .louceng:nth-child(2).active {
+            background: #fd6a88;
+        }
+
+        .louceng:nth-child(3).active {
+            background: #4bff33;
+        }
+
+        .louceng:nth-child(4).active {
+            background: #0040ff;
+        }
+
+        .louceng:nth-child(5).active {
+            background: #de6cff;
+        }
+
+        .louceng:nth-child(6).active {
+            background: #ff0017;
+        }
+        .xia{
+            height: 1000px;
+        }
+    </style>
+</head>
+<body>
+<div class="ding"></div>
+<div class="zuoce">
+    <div class="louceng active">1</div>
+    <div class="louceng">2</div>
+    <div class="louceng">3</div>
+    <div class="louceng">4</div>
+    <div class="louceng">5</div>
+    <div class="louceng">6</div>
+</div>
+<div class="neirong">
+    <div class="content">1</div>
+    <div class="content">2</div>
+    <div class="content">3</div>
+    <div class="content">4</div>
+    <div class="content">5</div>
+    <div class="content">6</div>
+</div>
+<div class="xia"></div>
+
+
+<div class="aa"></div>
+</body>
+<script src="animate.js"></script>
+<script>
+    let obj = document.body.scrollTop === 0 ? document.documentElement : document.body;
+    {
+        let ding = document.querySelector(".ding")
+        window.onscroll = function () {
+            let obj = document.body.scrollTop === 0 ? document.documentElement : document.body;
+            let st = obj.scrollTop;
+            if (st > 800) {
+                ding.style.top = "0";
+            } else if (st < 800) {
+                ding.style.top = "-60px";
+            }
+        }
+    }
+    {
+
+        let zuoce = document.querySelector(".zuoce")
+        let zuobian = document.querySelectorAll(".zuoce .louceng")
+        let neirong = document.querySelectorAll(".neirong .content")
+        window.addEventListener("scroll", function () {
+            let obj = document.body.scrollTop === 0 ? document.documentElement : document.body;
+            let st = obj.scrollTop;
+            if (st > 800) {
+                zuoce.style.cssText = "width:30px;height:210px;";
+            } else if (st < 800) {
+                zuoce.style.cssText = "width:0px;height:0px;";
+            }
+            console.log(st)
+            for (let i = 0; i < neirong.length; i++) {
+                if(st > neirong[i].offsetTop - 60){
+                    for(let i = 0; i < zuobian.length; i++){
+                        zuobian[i].classList.remove("active")
+                    }
+                        zuobian[i].classList.add("active")
+                }
+            }
+        })
+    }
+    {
+        let a = document.querySelector(".aa")
+        a.onclick = function () {
+            animate(obj, {scrollTop: 0}, 1000)
+//            alert(1)
+        }
+        //第一个参数操作的对象
+        //第二个参数传的对象，属性值得集合形式，用花括号包起来,属性 ： 冒号值
+        //第三个接收的参数是时间，默认是500毫秒
+        //第四个对应的就是一个函数，动画效果，比如匀速
+        //第五个是一个回调函数，
+    }
+
+    {
+        let louceng = document.querySelectorAll(".zuoce .louceng")
+        let neirong = document.querySelectorAll(".neirong .content")
+        console.log(obj)
+        louceng.forEach(function (ele, index) {
+            ele.onclick = function () {
+                let ot = neirong[index].offsetTop;
+                animate(obj, {scrollTop: ot - 60}, 1000);
+            }
+        })
+    }
+
+
+</script>
+</html>
